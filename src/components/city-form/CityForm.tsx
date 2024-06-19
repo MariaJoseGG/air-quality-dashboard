@@ -20,6 +20,7 @@ import {
 import { useEffect, useState } from "react"
 import fetchData from "@/utils/fetch-data"
 import { State, City } from "@/types/fetch-types"
+import CityData from "@/components/city-data/CityData"
 
 const formSchema = z.object({
   state: z.string({ required_error: "Por favor seleccione un departamento" }),
@@ -37,6 +38,9 @@ const CityForm = () => {
   const [currentState, setCurrentState] = useState('' as string)
   const [citiesError, setCitiesError] = useState(false)
   const [cities, setCities] = useState([] as string[])
+  const [stateName, setStateName] = useState('' as string)
+  const [cityName, setCityName] = useState('' as string)
+  const [showCityData, setShowCityData] = useState(false)
 
   const getStates = async () => {
     const statesNames = await fetchData({
@@ -55,7 +59,6 @@ const CityForm = () => {
   }
 
   const getCities = async () => {
-    console.log('getCities')
     const citiesNames = await fetchData({
       uri: `cities?state=${currentState}&country=${import.meta.env.VITE_COUNTRY}&key=${import.meta.env.VITE_API_KEY}`,
       method: 'get'
@@ -73,7 +76,6 @@ const CityForm = () => {
   }
 
   useEffect(() => {
-    console.log('useEffect')
     if (firstRender) {
       setFirstRender(false)
       getStates()
@@ -91,7 +93,10 @@ const CityForm = () => {
   }
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    const { state, city } = values
+    setStateName(state)
+    setCityName(city)
+    setShowCityData(true)
   }
 
   return (
@@ -101,7 +106,7 @@ const CityForm = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full sm:w-3/4 flex flex-col items-center gap-5">
             {disable && (
-              <p className="text-red-400">Ha ocurrido un error en el servidor. Espere un momento y después vuelva a intentarlo</p>)}
+              <p className="text-red-400">Ha ocurrido un error en el servidor. Espere un minuto y después vuelva a intentarlo</p>)}
 
             {statesError ? (<p className="text-red-400">Ha ocurrido un error al cargar los departamentos</p>) : (
               <>
@@ -165,6 +170,7 @@ const CityForm = () => {
           </form>
         </Form>
       </div>
+      {showCityData && <CityData state={stateName} city={cityName} />}
     </>
   )
 }
