@@ -28,11 +28,11 @@ const CityData = ({ state, city }: { state: string; city: string }) => {
 
       setWeather(cityData.current.weather)
       const date = new Date(cityData.current.weather.ts)
-      setDateWeather(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:0${date.getMinutes()}`)
+      setDateWeather(`${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:0${date.getMinutes()} H`)
 
       setPollution(cityData.current.pollution)
       const datePollution = new Date(cityData.current.pollution.ts)
-      setDatePollution(`${datePollution.getDate()}/${datePollution.getMonth() + 1}/${datePollution.getFullYear()} ${datePollution.getHours()}:0${datePollution.getMinutes()}`)
+      setDatePollution(`${datePollution.getDate()}/${datePollution.getMonth() + 1}/${datePollution.getFullYear()} ${datePollution.getHours()}:0${datePollution.getMinutes()} H`)
     }
   }
 

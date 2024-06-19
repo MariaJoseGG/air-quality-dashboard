@@ -176,6 +176,7 @@ const CityForm = () => {
           </form>
         </Form>
       </div>
+      <div className="w-full border border-dodger-blue-500"></div>
       {showCityData && <CityData state={stateName} city={cityName} />}
     </>
   )
