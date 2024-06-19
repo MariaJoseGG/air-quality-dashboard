@@ -2,6 +2,7 @@ import { Pollution, Weather } from "@/types/fetch-types";
 import fetchData from "@/utils/fetch-data";
 import { useEffect, useState } from "react";
 import Loading from "../loading";
+import { units, unitsName } from "@/constants/units";
 
 const CityData = ({ state, city }: { state: string; city: string }) => {
   const [errorRequest, setErrorRequest] = useState(false)
@@ -48,10 +49,10 @@ const CityData = ({ state, city }: { state: string; city: string }) => {
   }
 
   return (
-    <div className="flex flex-col items-center sm:flex-row sm:justify-between gap-5 w-full">
+    <div className="flex flex-col items-center sm:flex-row sm:justify-around gap-16 w-full">
       {errorRequest ? (
         <div className="flex flex-col items-center justify-center">
-          <p className="text-red-400">Ha ocurrido un error en el servidor. Espere un minuto y después vuelva a intentarlo</p>
+          <p className="text-red-400">Ha ocurrido un error en el servidor. Por favor espere un minuto y después vuelva a intentarlo</p>
           <Loading />
         </div>
       ) : (
@@ -72,12 +73,20 @@ const CityData = ({ state, city }: { state: string; city: string }) => {
                     <p className="font-semibold">Humedad</p>
                     <p>{weather.hu}%</p>
                   </div>
-                  <p className="text-gray-600 pt-4">{dateWeather}</p>
+                  <p className="text-gray-600 pt-4 text-sm">{dateWeather}</p>
                 </>
               )}
             </div>
-            <div>
-              <h2 className="text-xl font-bold text-dodger-blue-800">Calidad del aire en {city}</h2>
+            <div className="flex flex-col gap-3 items-center rounded-lg bg-dodger-blue-200 p-3 shadow-lg">
+              <h2 className="text-xl font-bold text-dodger-blue-950">Calidad del aire en {city}</h2>
+              <h3 className="text-lg text-dodger-blue-900">Contaminante principal</h3>
+              {pollution && (
+                <>
+                  <p>{unitsName[pollution.mainus]} | {pollution.aqius} {units[pollution.mainus]}</p>
+                  <p className="font-semibold">US AQI</p>
+                  <p className="text-gray-600 pt-4 text-sm">{datePollution}</p>
+                </>
+              )}
             </div>
           </>
         )
