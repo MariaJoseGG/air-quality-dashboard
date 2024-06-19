@@ -11,3 +11,6 @@ npm run dev
 ```
 
 La aplicación se ejecuta en http://localhost:5173/
+
+## Características
+Para cambiar el país para el cual se desean consultar los datos de calidad del aire, verificar que el país esté disponible en la API y cambiar el valor de la variable de entorno `VITE_COUNTRY` por el nombre.

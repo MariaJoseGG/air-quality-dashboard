@@ -21,6 +21,7 @@ import { useEffect, useState } from "react"
 import fetchData from "@/utils/fetch-data"
 import { State, City } from "@/types/fetch-types"
 import CityData from "@/components/city-data/CityData"
+import Loading from "../loading"
 
 const formSchema = z.object({
   state: z.string({ required_error: "Por favor seleccione un departamento" }),
@@ -106,7 +107,11 @@ const CityForm = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full sm:w-3/4 flex flex-col items-center gap-5">
             {disable && (
-              <p className="text-red-400">Ha ocurrido un error en el servidor. Espere un minuto y después vuelva a intentarlo</p>)}
+              <div className="flex flex-col items-center">
+                <p className="text-red-400">Ha ocurrido un error en el servidor. Espere un minuto y después vuelva a intentarlo</p>
+                <Loading />
+              </div>
+            )}
 
             {statesError ? (<p className="text-red-400">Ha ocurrido un error al cargar los departamentos</p>) : (
               <>
